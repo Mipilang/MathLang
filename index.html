@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradutor da Língua Matemática</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; text-align: center; background: #f4f4f9; }
+        textarea { width: 100%; height: 100px; margin: 10px 0; padding: 10px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        .resultado { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #ddd; min-height: 80px; }
+        .simbolos { font-size: 32px; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
+        .pronuncia { font-size: 18px; color: #7f8c8d; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>🧮 Tradutor: Português ➔ Matemática</h1>
+    <p>Digite palavras separadas por espaço (Ex: <i>eu nao tenho união</i>)</p>
+    
+    <textarea id="inputTexto" placeholder="Digite em português aqui..." oninput="traduzir()"></textarea>
+
+    <div class="resultado">
+        <div class="simbolos" id="outSimbolos">-</div>
+        <div class="pronuncia" id="outPronuncia">-</div>
+    </div>
+
+    <script>
+        // O dicionário oficial da sua língua!
+        const dicionario = {
+            "eu": { sim: "=", pron: "Me" },
+            "não": { sim: "-", pron: "Fi" },
+            "nao": { sim: "-", pron: "Fi" },
+            "tenho": { sim: "+", pron: "Ta" },
+            "tem": { sim: "+", pron: "Ta" },
+            "união": { sim: "∪", pron: "Un" },
+            "uniao": { sim: "∪", pron: "Un" },
+            "grupo": { sim: "∑", pron: "So" },
+            "povo": { sim: "[ℝ]", pron: "Ra" },
+            "diferente": { sim: "≠", pron: "Za" },
+            "ponto": { sim: ".", pron: "Po" },
+            "criar": { sim: "×", pron: "Ka" },
+            "estrela": { sim: "*", pron: "Ki" },
+            "brilho": { sim: "*", pron: "Ki" },
+            "dividir": { sim: "÷", pron: "Di" },
+            "raiz": { sim: "√", pron: "Va" },
+            "maior": { sim: ">", pron: "Ma" },
+            "muito": { sim: ">", pron: "Ma" },
+            "menor": { sim: "<", pron: "Bi" },
+            "pouco": { sim: "<", pron: "Bi" }
+        };
+
+        function traduzir() {
+            const texto = document.getElementById("inputTexto").value.toLowerCase();
+            const palavras = texto.split(/\s+/);
+            
+            let simbolosResultados = [];
+            let pronunciaResultados = [];
+
+            palavras.forEach(palavra => {
+                if (dicionario[palavra]) {
+                    simbolosResultados.push(dicionario[palavra].sim);
+                    pronunciaResultados.push(dicionario[palavra].pron);
+                } else if (palavra.trim() !== "") {
+                    // Se não conhecer a palavra, mantém o texto original entre interrogações
+                    simbolosResultados.push(`?${palavra}?`);
+                    pronunciaResultados.push(`?${palavra}?`);
+                }
+            });
+
+            document.getElementById("outSimbolos").innerText = simbolosResultados.join(" ") || "-";
+            document.getElementById("outPronuncia").innerText = pronunciaResultados.join("-") || "-";
+        }
+    </script>
+</body>
+</html>
